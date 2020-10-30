@@ -5,16 +5,19 @@ import (
 	"os"
 )
 
+// Extractor is the structure responsible for extract exif tags.
 type Extractor struct {
 	path string
 }
 
+// NewExtractor creates a new *Extractor.
 func NewExtractor(path string) *Extractor {
 	return &Extractor{
 		path: path,
 	}
 }
 
+// Extract extracts all exif tags from provided path.
 func (e *Extractor) Extract() ([]exif2.ExifTag, error) {
 	source, err := os.Open(e.path)
 	if err != nil {

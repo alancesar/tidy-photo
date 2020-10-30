@@ -11,6 +11,7 @@ const (
 	ImageType Type = "audio/"
 )
 
+// Is checks if a file is a provide Type.
 func Is(path string, t Type) bool {
 	mime, err := mimetype.DetectFile(path)
 	if err != nil {

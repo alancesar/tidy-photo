@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 )
 
+// LookFor deep walks in a path and get all files that match with a provided mime.Type.
 func LookFor(rootPath string, t mime.Type) []string {
 	paths := make([]string, 0)
 	_ = filepath.Walk(rootPath, func(path string, info os.FileInfo, err error) error {
