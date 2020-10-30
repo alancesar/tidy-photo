@@ -4,10 +4,13 @@ import (
 	"flag"
 	"fmt"
 	"github.com/alancesar/tidy-photo/command"
+	"github.com/alancesar/tidy-photo/datetime"
+	"github.com/alancesar/tidy-photo/exif"
 	"github.com/alancesar/tidy-photo/mime"
 	"github.com/alancesar/tidy-photo/path"
-	"github.com/alancesar/tidy-photo/processor"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
 const defaultPattern = "2006/2006-01-02"
@@ -29,11 +32,32 @@ func main() {
 	}
 
 	for index, sourcePath := range paths {
-		destination, err := processor.Process(sourcePath, *rootDestinationPath, *pattern, commands...)
+		destination, err := process(sourcePath, *rootDestinationPath, *pattern, commands...)
 		if err != nil {
 			fmt.Printf("(%d/%d) [failed ] %s\n", index+1, total, destination)
 		} else {
 			fmt.Printf("(%d/%d) [success] %s\n", index+1, total, destination)
 		}
 	}
+}
+
+func process(sourcePath, rootDestination, pattern string, commands ...command.Command) (string, error) {
+	tags, err := exif.NewExtractor(sourcePath).Extract()
+	if err != nil {
+		return "", err
+	}
+
+	t, err := datetime.ExtractDateTime(tags)
+	if err != nil {
+		return "", err
+	}
+
+	date := t.Format(pattern)
+	_, filename := filepath.Split(sourcePath)
+	destinationPath := filepath.Join(strings.Split(date, "/")...)
+	destinationPath = filepath.Join(rootDestination, destinationPath, filename)
+	destinationPath = filepath.Clean(destinationPath)
+
+	err = command.NewExecutor(sourcePath, destinationPath).Execute(commands...)
+	return destinationPath, err
 }
