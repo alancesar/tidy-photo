@@ -2,6 +2,7 @@ package processor
 
 import (
 	"errors"
+	"github.com/alancesar/tidy-photo/command"
 	"github.com/alancesar/tidy-photo/datetime"
 	exif2 "github.com/dsoprea/go-exif/v3"
 	"os"
@@ -11,7 +12,7 @@ import (
 
 var ExifErr = errors.New("error on get exif")
 
-func Process(sourcePath, rootDestination, pattern string, sandbox bool) (string, error) {
+func Process(sourcePath, rootDestination, pattern string, commands ...command.Command) (string, error) {
 	source, err := os.Open(sourcePath)
 	if err != nil {
 		return "", err
@@ -37,18 +38,10 @@ func Process(sourcePath, rootDestination, pattern string, sandbox bool) (string,
 
 	date := t.Format(pattern)
 	_, filename := filepath.Split(sourcePath)
-	completePath := filepath.Join(strings.Split(date, "/")...)
-	completePath = filepath.Join(rootDestination, completePath, filename)
-	completePath = filepath.Clean(completePath)
+	destinationPath := filepath.Join(strings.Split(date, "/")...)
+	destinationPath = filepath.Join(rootDestination, destinationPath, filename)
+	destinationPath = filepath.Clean(destinationPath)
 
-	if !sandbox {
-		dir, _ := filepath.Split(completePath)
-		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
-			return "", err
-		}
-
-		err = os.Rename(sourcePath, completePath)
-	}
-
-	return completePath, err
+	err = command.NewExecutor(sourcePath, destinationPath).Execute(commands...)
+	return destinationPath, err
 }

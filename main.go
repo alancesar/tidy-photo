@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/alancesar/tidy-photo/command"
 	"github.com/alancesar/tidy-photo/file"
 	"github.com/alancesar/tidy-photo/processor"
 	"os"
@@ -31,8 +32,13 @@ func main() {
 
 	total := len(paths)
 
+	var commands []command.Command
+	if !*sandbox {
+		commands = []command.Command{command.MkDirCommand, os.Rename}
+	}
+
 	for index, path := range paths {
-		destination, err := processor.Process(path, *rootDestinationPath, *pattern, *sandbox)
+		destination, err := processor.Process(path, *rootDestinationPath, *pattern, commands...)
 		if err != nil && err != processor.ExifErr {
 			panic(err)
 		}
