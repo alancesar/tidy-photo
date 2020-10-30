@@ -1,32 +1,15 @@
 package processor
 
 import (
-	"errors"
 	"github.com/alancesar/tidy-photo/command"
 	"github.com/alancesar/tidy-photo/datetime"
-	exif2 "github.com/dsoprea/go-exif/v3"
-	"os"
+	"github.com/alancesar/tidy-photo/exif"
 	"path/filepath"
 	"strings"
 )
 
-var ExifErr = errors.New("error on get exif")
-
 func Process(sourcePath, rootDestination, pattern string, commands ...command.Command) (string, error) {
-	source, err := os.Open(sourcePath)
-	if err != nil {
-		return "", err
-	}
-	defer func() {
-		_ = source.Close()
-	}()
-
-	rawExif, err := exif2.SearchAndExtractExifWithReader(source)
-	if err != nil {
-		return "", err
-	}
-
-	tags, _, err := exif2.GetFlatExifData(rawExif, nil)
+	tags, err := exif.NewExtractor(sourcePath).Extract()
 	if err != nil {
 		return "", err
 	}
