@@ -13,7 +13,10 @@ import (
 	"strings"
 )
 
-const defaultPattern = "2006/2006-01-02"
+const (
+	defaultPattern   = "2006/2006-01-02"
+	defaultSeparator = "/"
+)
 
 func main() {
 	rootSourcePath := flag.String("s", "./", "source directory")
@@ -54,7 +57,7 @@ func process(sourcePath, rootDestination, pattern string, commands ...command.Co
 
 	date := t.Format(pattern)
 	_, filename := filepath.Split(sourcePath)
-	destinationPath := filepath.Join(strings.Split(date, "/")...)
+	destinationPath := filepath.Join(strings.Split(date, defaultSeparator)...)
 	destinationPath = filepath.Join(rootDestination, destinationPath, filename)
 	destinationPath = filepath.Clean(destinationPath)
 
