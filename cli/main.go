@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 	"github.com/alancesar/tidy-photo/command"
-	"github.com/alancesar/tidy-photo/file"
+	"github.com/alancesar/tidy-photo/mime"
+	"github.com/alancesar/tidy-photo/path"
 	"github.com/alancesar/tidy-photo/processor"
 	"os"
-	"path/filepath"
 )
 
 const defaultPattern = "2006/2006-01-02"
@@ -20,16 +20,7 @@ func main() {
 	flag.Parse()
 
 	fmt.Println("Reading source directory...")
-	paths := make([]string, 0)
-	_ = filepath.Walk(*rootSourcePath, func(path string, info os.FileInfo, err error) error {
-		if !file.IsFile(path) {
-			return nil
-		}
-
-		paths = append(paths, path)
-		return nil
-	})
-
+	paths := path.LookFor(*rootSourcePath, mime.ImageType)
 	total := len(paths)
 
 	var commands []command.Command
@@ -37,14 +28,12 @@ func main() {
 		commands = []command.Command{command.MkDirCommand, os.Rename}
 	}
 
-	for index, path := range paths {
-		destination, err := processor.Process(path, *rootDestinationPath, *pattern, commands...)
-		if err != nil && err != processor.ExifErr {
-			panic(err)
-		}
-
-		if err == nil {
-			fmt.Printf("(%d/%d) %s\n", index+1, total, destination)
+	for index, sourcePath := range paths {
+		destination, err := processor.Process(sourcePath, *rootDestinationPath, *pattern, commands...)
+		if err != nil {
+			fmt.Printf("(%d/%d) [failed ] %s\n", index+1, total, destination)
+		} else {
+			fmt.Printf("(%d/%d) [success] %s\n", index+1, total, destination)
 		}
 	}
 }
