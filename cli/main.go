@@ -26,7 +26,7 @@ func main() {
 
 	fmt.Println("Reading source directory...")
 	// Some RAW image files as Canon's .CR3 are described as "application/octet-stream"
-	paths := path.LookFor(*rootSourcePath, mime.ImageType, mime.ApplicationOctetStream)
+	paths := path.LookFor(*rootSourcePath, mime.ImageType, mime.ApplicationOctetStreamType)
 	total := len(paths)
 
 	var commands []command.Command
