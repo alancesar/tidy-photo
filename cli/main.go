@@ -6,7 +6,6 @@ import (
 	"github.com/alancesar/tidy-file/command"
 	"github.com/alancesar/tidy-file/mime"
 	"github.com/alancesar/tidy-file/path"
-	"github.com/alancesar/tidy-photo/datetime"
 	"github.com/alancesar/tidy-photo/exif"
 	"os"
 	"path/filepath"
@@ -26,7 +25,8 @@ func main() {
 	flag.Parse()
 
 	fmt.Println("Reading source directory...")
-	paths := path.LookFor(*rootSourcePath, mime.ImageType)
+	// Some RAW image files as Canon's .CR3 are described as "application/octet-stream"
+	paths := path.LookFor(*rootSourcePath, mime.ImageType, mime.ApplicationOctetStream)
 	total := len(paths)
 
 	var commands []command.Command
@@ -45,12 +45,13 @@ func main() {
 }
 
 func process(sourcePath, rootDestination, pattern string, commands ...command.Command) (string, error) {
-	tags, err := exif.NewExtractor(sourcePath).Extract()
+	raw, err := exif.NewReader(sourcePath).Extract()
 	if err != nil {
 		return "", err
 	}
 
-	t, err := datetime.ExtractDateTime(tags)
+	parser := exif.NewParser(raw)
+	t, err := parser.GetDateTime()
 	if err != nil {
 		return "", err
 	}
