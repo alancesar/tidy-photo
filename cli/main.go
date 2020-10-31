@@ -3,11 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/alancesar/tidy-photo/command"
+	"github.com/alancesar/tidy-file/command"
+	"github.com/alancesar/tidy-file/mime"
+	"github.com/alancesar/tidy-file/path"
 	"github.com/alancesar/tidy-photo/datetime"
 	"github.com/alancesar/tidy-photo/exif"
-	"github.com/alancesar/tidy-photo/mime"
-	"github.com/alancesar/tidy-photo/path"
 	"os"
 	"path/filepath"
 	"strings"
@@ -26,7 +26,7 @@ func main() {
 	flag.Parse()
 
 	fmt.Println("Reading source directory...")
-	paths := path.LookFor(*rootSourcePath, mime.ImageType)
+	paths := path.LookFor(*rootSourcePath, mime.AudioType)
 	total := len(paths)
 
 	var commands []command.Command
