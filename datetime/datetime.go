@@ -11,6 +11,7 @@ const (
 	dateTimeLayout  = "2006:01:02 15:04:05"
 )
 
+// ExtractDateTime retrieves a time.Time from provided exif tags.
 func ExtractDateTime(tags []exif.ExifTag) (time.Time, error) {
 	for _, item := range tags {
 
