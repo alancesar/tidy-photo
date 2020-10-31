@@ -26,7 +26,7 @@ func main() {
 	flag.Parse()
 
 	fmt.Println("Reading source directory...")
-	paths := path.LookFor(*rootSourcePath, mime.AudioType)
+	paths := path.LookFor(*rootSourcePath, mime.ImageType)
 	total := len(paths)
 
 	var commands []command.Command
