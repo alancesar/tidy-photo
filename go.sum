@@ -1,3 +1,7 @@
+github.com/alancesar/tidy-file v0.0.0-20201115040815-0676f30ded88 h1:F/t44GeENltkCDKueuUj/42ucesRVGwAbd+c+IYPli0=
+github.com/alancesar/tidy-file v0.0.0-20201115040815-0676f30ded88/go.mod h1:CyacnJ+PGdpyf4b/W9pVWhCXC+sDDIdaPp+Ro7Dcazs=
+github.com/alancesar/tidy-file v0.0.0-20201115041559-735a90923a15 h1:4z0FBiR81CdhuQW32F/Y/VbrUnr3u0iV0HBXBztanlg=
+github.com/alancesar/tidy-file v0.0.0-20201115041559-735a90923a15/go.mod h1:CyacnJ+PGdpyf4b/W9pVWhCXC+sDDIdaPp+Ro7Dcazs=
 github.com/alancesar/tidy-file v1.0.0 h1:fTwPFpP7o8Dm9alR7moDN5hxh/A6524GNvnTZ2n/k9Y=
 github.com/alancesar/tidy-file v1.0.0/go.mod h1:CyacnJ+PGdpyf4b/W9pVWhCXC+sDDIdaPp+Ro7Dcazs=
 github.com/alancesar/tidy-file v1.0.1 h1:F5EODbtrMLeKortquS2SqC5AloDR696CL1HT3+53KNY=
@@ -5,6 +9,7 @@ github.com/alancesar/tidy-file v1.0.1/go.mod h1:CyacnJ+PGdpyf4b/W9pVWhCXC+sDDIda
 github.com/alancesar/tidy-file v1.0.2 h1:DcIYI7YJ+fHejcXzUCTctXqP94eCLkbEA5VKzfMelxw=
 github.com/alancesar/tidy-file v1.0.2/go.mod h1:CyacnJ+PGdpyf4b/W9pVWhCXC+sDDIdaPp+Ro7Dcazs=
 github.com/alancesar/tidy-file v1.0.3/go.mod h1:CyacnJ+PGdpyf4b/W9pVWhCXC+sDDIdaPp+Ro7Dcazs=
+github.com/alancesar/tidy-file v1.0.4 h1:uWCwvKi5Svc/Wq6WoHkq6EO7woNmiZsmkS1KLYRKxKA=
 github.com/alancesar/tidy-file v1.0.4/go.mod h1:CyacnJ+PGdpyf4b/W9pVWhCXC+sDDIdaPp+Ro7Dcazs=
 github.com/dsoprea/go-exif/v2 v2.0.0-20200321225314-640175a69fe4/go.mod h1:Lm2lMM2zx8p4a34ZemkaUV95AnMl4ZvLbCUbwOvLC2E=
 github.com/dsoprea/go-exif/v3 v3.0.0-20200717053412-08f1b6708903/go.mod h1:0nsO1ce0mh5czxGeLo4+OCZ/C6Eo6ZlMWsz7rH/Gxv8=

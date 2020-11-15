@@ -31,7 +31,7 @@ func main() {
 
 	var commands []command.Command
 	if !*sandbox {
-		commands = []command.Command{command.MkDirCommand, os.Rename}
+		commands = []command.Command{command.MkDir, os.Rename}
 	}
 
 	for index, sourcePath := range paths {
