@@ -1,6 +1,7 @@
 package exif
 
 import (
+	"crypto/md5"
 	"fmt"
 	"github.com/dsoprea/go-exif/v3"
 	exif2 "github.com/dsoprea/go-exif/v3"
@@ -76,4 +77,9 @@ func (p *Parser) GetDateTime() (time.Time, error) {
 	}
 
 	return time.Now(), nil
+}
+
+// GetChecksum generates the checksum based on raw exif data.
+func (p *Parser) GetChecksum() string {
+	return fmt.Sprintf("%x", md5.Sum(p.rawExif))
 }
